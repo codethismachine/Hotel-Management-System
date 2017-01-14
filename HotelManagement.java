@@ -23,10 +23,11 @@ public class HotelManagement extends Application {
     @Override
     public void start(Stage primaryStage) {
         Button empLogin = new Button();
-        Button rmAvail = new Button();        
+        Button rmAvail = new Button();
+        Button adminLogin = new Button();
         empLogin.setText("Employee Login");
         rmAvail.setText("Room availability");
-       
+        adminLogin.setText("Admin Login");
         empLogin.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
@@ -41,16 +42,24 @@ public class HotelManagement extends Application {
                 System.out.println("Room Availability!");
             }
         });
-        GridPane root = new GridPane();
-        root.setMinSize(400, 200);
+         adminLogin.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Administrator");
+            }
+        });
+        GridPane mainView = new GridPane();
+        mainView.setMinSize(400, 200);
  
-        root.setVgap(5);
-        root.setHgap(5);
+        mainView.setVgap(5);
+        mainView.setHgap(5);
     
         
-        root.add(empLogin,0,0);
-        root.add(rmAvail,1,0);
-        Scene scene = new Scene(root, 600, 450);
+        mainView.add(empLogin,0,0);
+        mainView.add(rmAvail,1,0);
+        mainView.add(adminLogin,0,1);
+        Scene scene = new Scene(mainView, 600, 450);
         
         primaryStage.setTitle("Hotel Management");
         primaryStage.setScene(scene);
