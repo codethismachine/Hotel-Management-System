@@ -8,6 +8,7 @@ package hotelmanagement;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -57,8 +58,13 @@ private GridPane loginView = new GridPane();
 
             PasswordField pwBox = new PasswordField();
             loginView.add(pwBox, 1, 2);
+            
+            Button signIn = new Button("Sign In");
+            HBox hBoxSign = new HBox(10);
+            hBoxSign.setAlignment(Pos.BOTTOM_RIGHT);
+            hBoxSign.getChildren().add(signIn);
+            loginView.add(hBoxSign,1,4);
              Scene sceneLog = new Scene(loginView, 600, 450);
-        
             primaryStage.setTitle("Employee Login");
             primaryStage.setScene(sceneLog);
             primaryStage.show();
