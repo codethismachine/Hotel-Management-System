@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hotelmanagement;
+package hotel_management;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,15 +19,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import java.sql.*;
 /**
  *
  * @author Jason
  */
-public class HotelManagement extends Application {
+public class Hotel_Management extends Application {
 
-private GridPane mainView = new GridPane();
-private GridPane loginView = new GridPane();    
+private final GridPane mainView = new GridPane();
+private final GridPane loginView = new GridPane();    
     @Override
     public void start(Stage primaryStage) {
         Button empLogin = new Button();
@@ -37,6 +36,13 @@ private GridPane loginView = new GridPane();
         empLogin.setText("Employee Login");
         rmAvail.setText("Room availability");
         adminLogin.setText("Admin Login");
+        
+      /**  
+       * This event handler will print "Login" to the console and will also 
+       * populate a new window with a login forum. Still need to set up the
+       * database to link to in order to store the information passed by the
+       * user.
+       */
         empLogin.setOnAction(new EventHandler<ActionEvent>() {
             
             
@@ -52,7 +58,8 @@ private GridPane loginView = new GridPane();
 
             TextField userTextField = new TextField();
             loginView.add(userTextField, 1, 1);
-
+              
+           
             Label pw = new Label("Password:");
             loginView.add(pw, 0, 2);
 
@@ -60,15 +67,36 @@ private GridPane loginView = new GridPane();
             loginView.add(pwBox, 1, 2);
             
             Button signIn = new Button("Sign In");
+            signIn.setOnAction(new EventHandler<ActionEvent>(){
+                @Override
+                public void handle(ActionEvent e){
+                   if(userTextField.getText() != null && !userTextField.getText().isEmpty()){
+                       userTextField.setText("Succesfull");
+                   }
+                   else{
+                       userTextField.setText("Button Did not work");
+                   }
+                }
+            });
+            Button closeLogin = new Button("Close Window");
+            
             HBox hBoxSign = new HBox(10);
             hBoxSign.setAlignment(Pos.BOTTOM_RIGHT);
             hBoxSign.getChildren().add(signIn);
+            hBoxSign.getChildren().add(closeLogin);
             loginView.add(hBoxSign,1,4);
              Scene sceneLog = new Scene(loginView, 600, 450);
-            primaryStage.setTitle("Employee Login");
-            primaryStage.setScene(sceneLog);
-            primaryStage.show();
-                        }
+             Stage loginScreen = new Stage();
+            loginScreen.setTitle("Employee Login");
+            loginScreen.setScene(sceneLog);
+            loginScreen.show();
+            closeLogin.setOnAction(new EventHandler<ActionEvent>(){
+               @Override
+               public void handle(ActionEvent e){
+                  loginScreen.close();
+               }
+            });
+        }
         });
          rmAvail.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -106,6 +134,12 @@ private GridPane loginView = new GridPane();
      */
     public static void main(String[] args) {
         launch(args);
+//        HTMdatabase test = new HTMdatabase();
+//       test.createTable();
+//       test.insertTable();
+//       test.readAllDataBase();
+//       test.deleteRecord(9);
+//       test.readAllDataBase();
     }
     
 }
