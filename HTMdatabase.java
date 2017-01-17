@@ -50,7 +50,7 @@ public class HTMdatabase {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
       }
-      System.out.println("Records created successfully");
+      System.out.println("Employee table created successfully");
   }
   
   public void insertTable(){
@@ -75,7 +75,65 @@ public class HTMdatabase {
       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
       System.exit(0);
     }
-    System.out.println("Records created successfully");
+    System.out.println("Records inserted successfully");
      
+  }
+  public void readAllDataBase(){
+      try {
+      Class.forName("org.sqlite.JDBC");
+      Connection c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      Statement stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery( "SELECT * FROM EMPLOYEE;" );
+      while ( rs.next() ) {
+         int id = rs.getInt("EMPLOYEE_ID");
+         String  fname = rs.getString("FIRST_NAME");
+         String  lname = rs.getString("LAST_NAME");
+         int hireYear  = rs.getInt("HIRE_YEAR");
+         int  hireMonth = rs.getInt("HIRE_MONTH");
+         int  hireDay = rs.getInt("HIRE_DAY");
+         int departmentID = rs.getInt("DEPARTMENT_ID");
+         String username = rs.getString("USERNAME");
+         String password = rs.getString("PASSWORD");
+         System.out.println( "EMPOYEE ID = " + id );
+         System.out.println( "FIRST NAME = " + fname );
+         System.out.println( "LAST NAME = " + lname );
+         System.out.println( "HIRE DATE = " + hireMonth + "/" + hireDay + "/" 
+         + hireYear);
+         System.out.println( "DEPARTEMENT ID = " + departmentID);
+         System.out.println("USERNAME = " + username);
+         System.out.println("PASSWORD = " + password);
+         System.out.println();
+      }
+      rs.close();
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
+  }
+   public void deleteRecord(int employeeID){
+      try {
+      Class.forName("org.sqlite.JDBC");
+      Connection c = DriverManager.getConnection("jdbc:sqlite:test.db");
+      c.setAutoCommit(false);
+      System.out.println("Opened database successfully");
+
+      Statement stmt = c.createStatement();
+      String sql = "DELETE from EMPLOYEE where EMPLOYEE_ID="
+              + employeeID + ";";
+      stmt.executeUpdate(sql);
+      c.commit();
+      System.out.println("Cleared table successfully");
+     
+      stmt.close();
+      c.close();
+    } catch ( Exception e ) {
+      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      System.exit(0);
+    }
   }
 }
